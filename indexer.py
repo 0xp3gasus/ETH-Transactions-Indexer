@@ -135,6 +135,11 @@ def insertBlockTransactions(web3, cur, blockNumber, numTxs):
     for txIndex in range(0, numTxs):
 
         tx = web3.eth.getTransactionByBlock(blockNumber, txIndex)
+
+        # Check if transaction is a contract transfer
+        if tx["value"] == 0 and not tx["input"].startswith("0xa9059cbb"):
+            continue
+
         txReceipt = web3.eth.get_transaction_receipt(tx["hash"])
 
         # Pre-byzantium transactions do not have status field
