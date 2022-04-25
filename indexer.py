@@ -124,6 +124,9 @@ def main():
             else:
                 logger.debug(f"Block {blockNumber} with no transactions")
 
+        cur.close()
+        conn.close()
+        time.sleep(int(period))
 
 def insertBlockTransactions(web3, cur, blockNumber, numTxs):
 
