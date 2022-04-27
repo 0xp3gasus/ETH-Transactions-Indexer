@@ -2,20 +2,20 @@
 
 **ETH-Transactions-Indexer** is a service that allows you to store ETH and ERC20 transactions in a Postgres database to get insights of them.
 
-This repository only contains the python code that indexs the transactions into the Postgres database. ETH node and Postgres database management is out of this repository, althought database schema is provided.
+This repository only contains the python code that indexs the transactions into the Postgres database. ETH node and Postgres database management is out of this repository, althought [database schema](db-schema.sql) is provided.
 
 
 # Workflow
 
 Application workflow
 
-1. Connect to node using [Web.py](https://web3py.readthedocs.io/en/stable/)
-2. Connect to Postgres database
+1. Node connection using [Web.py](https://web3py.readthedocs.io/en/stable/)
+2. Postgres database connection using [psycopg2](https://www.psycopg.org)
 3. Wait until node is fully synchronised
 4. Indexing proccess from the selected block or if it had been started previously and some transactions were already indexed into the database, from the previous last indexed block
 
 
-#  Stored information
+# Stored information
 
 Indexed transactions included the following information:
 
@@ -28,15 +28,15 @@ Indexed transactions included the following information:
 - `block` is the block number.
 - `txhash` is the transaction hash.
 - `contract_to` recipient's Ethereum address in case of conotract.
-- `contacta_value` is the amount transfered of ERC20 tranction in its token.
+- `contract_value` is the amount transfered of ERC20 tranction in its token.
 - `status` is the transaction status introduce in the Byzantium fork of Ethereum, it indicates if the top-level call succeded or failed. For Pre-bizantium transactions value is null
 
 
-# Setup
+# Setup
 
-ETH-Transactions-Indexer can be configured with the following environment varibles:
+**ETH-Transactions-Indexer** can be configured with the following environment varibles:
 
-- `DB_NAME`: Postgres url of the database with the neccesary [schema](). It's mandatory.
+- `DB_NAME`: Postgres url of the database with the neccesary [schema](db-schema.sql). It's mandatory.
 - `NODE_URL`: Ethereum node url. It's mandatory. The following providers are suppoorted:
   - IPC: Uses local file system, it is the fastest and the most secure.
   - WS: Works remotely, it faster than the HTTP
@@ -47,7 +47,7 @@ ETH-Transactions-Indexer can be configured with the following environment varibl
 
 ## Running locally
 
-To run **ETH-Transactions-Indexer** locally install the requirements using the following with the following command.
+To run **ETH-Transactions-Indexer** locally install the requirements using the following command.
 
 ```
 pip3 install -r requirements.txt
@@ -64,6 +64,7 @@ To avoid python module conflicts, it is highly recommend to create a python virt
 
 - Python 3.6
 - Web3.py
+- Psycopg2
 
 # Reference
 
